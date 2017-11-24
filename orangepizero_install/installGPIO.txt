@@ -1,0 +1,11 @@
+1 - Get the repo:
+git clone https://github.com/zhaolei/WiringOP.git -b h3
+
+2 - Install it:
+cd WiringOP
+sudo chmod +x ./build
+sudo ./build
+
+3 - Check the correct installation:
+cd ..
+gpio readall
