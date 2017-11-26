@@ -7,7 +7,22 @@ from time import sleep
 from datetime import datetime, time, date,timedelta
 axs=0
 bxs=0
+fitkoDB=0
 tlast=20
+
+def insertel(zona):
+   print "insertel zona"
+   print zona
+   print fitkoDB
+   print fitko
+   if int(fitko)<>int(fitkoDB):
+    conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO [dbo].[el_zony] ([datum],[power],[zona])VALUES(GETDATE ( ),'+str(fitko)+',\''+str(zona)+'\')  ;')
+    conn.commit()
+    cursor.close()
+    print "insert"
+    return
 
 def insertDevice():
    print "id"
@@ -83,6 +98,27 @@ except:
 print now_time
 print axs
 print bxs
+
+##last el fitko
+try:
+ conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+ cursor = conn.cursor()
+ cursor.execute('SELECT TOP 1 * FROM [dbo].[el_zony] where zona like \'fitko\' order by datum desc ;')
+ data = cursor.fetchall()
+ cursor.close()
+ row=data[0]
+ fitkoDB=int(row[1])
+ eltime=row[0]
+ h=xtime.hour
+ m=xtime.minute
+ print "axs"
+except:
+ print "chyba SQL fitkoDB"
+ fitkoDB=1
+
+print "ELfitkoDB"
+print fitkoDB
+print eltime
 ##last device
 a="2"
 b="2"
@@ -137,6 +173,10 @@ if out2.find(high1) > -1:
  a="1" 
 if out2.find(high2) > -1:
  b="1" 
+
+fitko="0"
+if output1.find(high1) > -1 or output1.find(high2) > -1:
+ fitko="1"
 
 print "x" 
 print a 
@@ -203,14 +243,19 @@ try:
   cursor.execute('INSERT INTO [dbo].[logs] ([datum],[text])VALUES(GETDATE ( ),'+log+') ;')
   conn.commit()
   cursor.close()
-
- if now_time >= time(5,00) and now_time <= time(21,15):
-  if (a.find("1") > -1 or b.find("1") > -1):
+ print "fitko"
+ print fitko
+ insertel("fitko")
+ 
+ print "fitko 2"
+ if now_time >= time(5,00) and now_time <= time(21,00):
+  #if (a.find("1") > -1 or b.find("1") > -1):
+  if (fitko.find("1") > -1):
    #asos
    print "start el fitko "
    os.system('/home/pi/elfitko_on.sh')
   else:
-   if (xtime + timedelta(minutes=5)) < (datetime.utcnow()):
+   #if (xtime + timedelta(minutes=5)) < (datetime.utcnow()):
     print "stop EL fitko"
     os.system("/home/pi/elfitko_off.sh")
  else:
