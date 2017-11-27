@@ -245,21 +245,25 @@ try:
   cursor.close()
  print "fitko"
  print fitko
- insertel("fitko")
- 
- print "fitko 2"
- if now_time >= time(5,00) and now_time <= time(21,00):
+ #insertel("fitko")
+
+ #print "fitko 2"
+ if now_time >= time(5,00) and now_time <= time(22,15):
   #if (a.find("1") > -1 or b.find("1") > -1):
   if (fitko.find("1") > -1):
    #asos
+   insertel("fitko")
    print "start el fitko "
    os.system('/home/pi/elfitko_on.sh')
   else:
    #if (xtime + timedelta(minutes=5)) < (datetime.utcnow()):
     print "stop EL fitko"
+    insertel("fitko")
     os.system("/home/pi/elfitko_off.sh")
  else:
   print "stop EL fitko mimo time zone"
+  fitko="0"
+  insertel("fitko")
   os.system("/home/pi/elfitko_off.sh")
 except:
  print "chyba SQL"

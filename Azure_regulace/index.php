@@ -78,7 +78,7 @@ $test = "Solar dodáno od 16.3.20012" ;
 
 
 	<span id="ctl00_baseContent_Label4" style="display:inline-block;color:Black;background-color:White;font-family:Arial;font-size:Small;font-weight:bold;height:16px;width:148px;left: 0px;
-            position: absolute; top: 324px">aktuální tepelný výkon slunecních kolektoru</span>
+            position: absolute; top: 346px">aktuální tepelný výkon slunecních kolektoru</span>
           
 
         <span id="ctl00_baseContent_Label300" class="lblTechnolP" style="left: 76px; position: absolute;
@@ -138,6 +138,9 @@ $res = sqlsrv_query( $conn, "SELECT TOP (1) * FROM teploty order by datum desc "
 
  $res2 = sqlsrv_query( $conn, "SELECT TOP 1 * FROM [dbo].[el_zony] where zona like 'fitko' order by datum desc " );
  $xxxx = sqlsrv_fetch_array($res2, SQLSRV_FETCH_ASSOC);
+ $res3 = sqlsrv_query( $conn, "SELECT TOP 1 * FROM [dbo].[el_zony] where zona like 'podkrovi' order by datum desc " );
+ $xxxxx = sqlsrv_fetch_array($res3, SQLSRV_FETCH_ASSOC);
+ 
  //$rkwh= mysql_query("SELECT * FROM `KWH`",GetMyConnection() );
 // $xkwh = mysql_fetch_row($rkwh);
  $dkwh = 0; //$xkwh[0];
@@ -179,7 +182,7 @@ $ckomin=$xxx['C_komin'];
 $ckotel=$xxx['C_kotel'];
 
 $elfitko=$xxxx['power'];
-
+$elpodkoriv=$xxxxx['power'];
 $Rt = 1010;
 $Ct = 3750;
 $konst = 0.00117;
@@ -213,13 +216,14 @@ $init = $doba*3600;
 $h = floor($init / 3600);
 $m = floor(($init / 60) % 60);
 
-Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 360px; width: 120px;\">$solar_aktual kW</span>";
+Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 382px; width: 120px;\">$solar_aktual kW</span>";
 
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 216px; width: 150px;\">barak aktual:$kwh kW</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 238px; width: 150px;\">doba aku: $h:$m</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 260px; width: 150px;\">solar den: $dkwh kwh</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 282px; width: 150px;\">el den: $elkwh kwh</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 304px; width: 150px;\">el fitko: $elfitko</span>";
+Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 326px; width: 150px;\">el podkrovi: $elpodkoriv</span>";
 
 Echo "<span id=\"ctl00_baseContent_lblA30\" class=\"lblTechnol\" style=\"left: 196px; position: absolute; top: 19px; right: 653px;\">$solar °C</span>";
         Echo "<span id=\"ctl00_baseContent_lblA13\" class=\"lblTechnol\" style=\"left: 200px; position: absolute; top: 327px; right: 528px;\">$TUV °C</span>";
