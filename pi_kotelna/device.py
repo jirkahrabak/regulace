@@ -256,10 +256,12 @@ try:
    print "start el fitko "
    os.system('/home/pi/elfitko_on.sh')
   else:
-   #if (xtime + timedelta(minutes=5)) < (datetime.utcnow()):
+   if (eltime + timedelta(minutes=10)) < (datetime.utcnow()):
     print "stop EL fitko"
     insertel("fitko")
     os.system("/home/pi/elfitko_off.sh")
+   else:
+    print "no stop el 1 mimo cas"
  else:
   print "stop EL fitko mimo time zone"
   fitko="0"

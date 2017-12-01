@@ -351,11 +351,15 @@ if tkotel > 65:
   print "c kotle off"
   os.system('/home/pi/C_kotel_off.sh')
   ckotel=0
-
 else:
  print "c kotel off"
  os.system('/home/pi/C_kotel_off.sh')
  ckotel=0
+ 
+if tkotel > 90:
+ print "c kotel on 90C"
+ os.system('/home/pi/C_kotel_on.sh')
+ ckotel=1  
 
 
 if zdroj1.find('.') > -1 and ckotel==0:
