@@ -216,16 +216,32 @@ try:
  print tkomin
 except:
  tkomin=0
- print "chyba cidla"
+ print "chyba cidla tkomin"
 
 try: 
- tspaliny=W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, "00000608df3d").get_temperature()
- tspaliny=str(tspaliny)
- print float(tspaliny)
+ tkotelna=W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, "00000608df3d").get_temperature()
+ tkotelna=str(tkotelna)
+ print float(tkotelna)
 except:
- tspaliny=0
- print "chyba cidla"
+ tkotelna=0
+ print "chyba cidla tkotelna"
+ 
+try: 
+ tkotelvratka=W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, "0516b57b39ff").get_temperature()
+ tkotelvratka=str(tkotelvratka)
+ print float(tkotelvratka)
+except:
+ tkotelvratka=0
+ print "chyba cidla tkotelvratka"
 
+try: 
+ tkominvoda=W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, "0516b56b86ff").get_temperature()
+ tkominvoda=str(tkominvoda)
+ print float(tkominvoda)
+except:
+ tkominvoda=0
+ print "chyba cidla tkominvoda" 
+ 
 try:
  # Read all the ADC channel values in a list.
  values = [0]*4
@@ -308,12 +324,12 @@ if tspaliny > 70:
 #   vspalin=0 
 #   os.system('/home/pi/V_spalin_off.sh')
 
- if tkotel < tnahrat:
+ if tspaliny < 120:
   print "nahrev cela nadrz"
   vspalin=1
   os.system('/home/pi/V_spalin_on.sh')
 
- if tkotel > (tnahrat + 5):
+ if tspaliny > 140:
   print "v OFF"
   vspalin=0
   os.system('/home/pi/V_spalin_off.sh')
@@ -370,7 +386,7 @@ else:
 try:
  conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
  cursor = conn.cursor()
- sql = "INSERT INTO [dbo].[teploty2] ([datum],[komin],[spaliny],[Ventilator_spalin],[C_komin],[C_kotel],[El_dohrev])VALUES(GETDATE ( ),'"+tkomin+"','"+str(tspaliny)+"','"+str(vspalin)+"','"+str(ckomin)+"','"+str(ckotel)+"','"+dohrev+"')"
+ sql = "INSERT INTO [dbo].[teploty2] ([datum],[komin],[spaliny],[Ventilator_spalin],[C_komin],[C_kotel],[El_dohrev],[kotelna],[kotelvratka],[kominvoda])VALUES(GETDATE ( ),'"+tkomin+"','"+str(tspaliny)+"','"+str(vspalin)+"','"+str(ckomin)+"','"+str(ckotel)+"','"+dohrev+"','"+str(tkotelna)+"','"+str(tkotelvratka)+"','"+str(tkominvoda)+"')"
  print sql
  cursor.execute(sql)
  conn.commit()

@@ -180,6 +180,9 @@ $tspaliny=$xxx['spaliny'];
 $vspaliny=$xxx['Ventilator_spalin'];
 $ckomin=$xxx['C_komin'];
 $ckotel=$xxx['C_kotel'];
+$tkotelna=$xxx['kotelna'];
+$tkotelvratka=$xxx['kotelvratka'];
+$tkominvoda=$xxx['kominvoda'];
 
 $elfitko=$xxxx['power'];
 $elpodkoriv=$xxxxx['power'];
@@ -244,7 +247,7 @@ Echo "<span id=\"ctl00_baseContent_lblA30\" class=\"lblTechnol\" style=\"left: 1
             top: 368px; right: 15px;\">$vrat °C</span>";
 
 Echo "<span id=\"ctl00_baseContent_lblA9\" class=\"lblTechnol\" style=\"left: 660px; position: absolute;
-            top: 500px; right: 15px;\">$kot</span>";
+            top: 500px; right: 15px;\">$tkotelvratka</span>";
             
         Echo "<span id=\"ctl00_baseContent_lblA6\" class=\"lblTechnol\" style=\"left: 682px; position: absolute;
             top: 235px; right: 165px;\">$Z1top °C</span>";
@@ -279,6 +282,16 @@ Echo "<span id=\"ctl00_baseContent_lblA9\" class=\"lblTechnol\" style=\"left: 78
 
 Echo "<span id=\"ctl00_baseContent_lblA9\" class=\"lblTechnol\" style=\"left: 900px; position: absolute;
             top: 470px; right: 15px;\">$tkomin °C</span>";
+
+			Echo "<span id=\"ctl00_baseContent_lblA9\" class=\"lblTechnol\" style=\"left: 900px; position: absolute;
+            top: 503px; right: 15px;\">$tkominvoda °C</span>";
+						
+			
+			
+Echo "<span id=\"ctl00_baseContent_lblA9\" class=\"lblTechnol\" style=\"left: 900px; position: absolute;
+            top: 437px; right: 15px;\">$tkotelna °C</span>";
+						
+			
 $Z2top = str_replace(",", ".", $Z2top);   
     if($Z2top > 25)
      Echo "<img id=\"ctl00_baseContent_imgOCtopeniz2\" src=\"images/oc.gif\" style=\"border-width:0px;left: 506px; position: absolute; top: 270px\" />";
