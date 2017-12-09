@@ -246,9 +246,25 @@ try:
  print "fitko"
  print fitko
  #insertel("fitko")
-
+ ##last el fitko
+ 
+ try:
+  conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+  cursor = conn.cursor()
+  cursor.execute('SELECT TOP (1) [time],[power],[zona] FROM [dbo].[curent el_fitko] ;')
+  data = cursor.fetchall()
+  cursor.close()
+  row=data[0]
+  fitkopower=int(row[1])
+  print "fitkopower"
+  print fitkopower
+ except:
+  print "chyba SQL fitkopower"
+  fitkopower=1 
+ 
  #print "fitko 2"
- if now_time >= time(5,00) and now_time <= time(22,15):
+ if fitkopower == 1:
+  print "fitkopower = 1"
   #if (a.find("1") > -1 or b.find("1") > -1):
   if (fitko.find("1") > -1):
    #asos
@@ -273,3 +289,29 @@ except:
  axs=1
  bxs=1
 
+##el osvetleni
+try:
+ conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+ cursor = conn.cursor()
+ cursor.execute('SELECT TOP (1) [time],[power],[zona] FROM [dbo].[curent el_osvetleni];')
+ data = cursor.fetchall()
+ cursor.close()
+ row=data[0]
+ osvetlenipower=int(row[1])
+ print "osvetlenipower"
+ print osvetlenipower
+except:
+ print "chyba SQL osvetlenipower"
+ osvetlenipower=1 
+ 
+#print "osvetleni 2"
+if osvetlenipower == 1:
+ print "osvetlenipower= 1"
+ #if (a.find("1") > -1 or b.find("1") > -1):
+ #insertel("osvetleni")
+ print "start el osvetleni "
+ os.system('/home/pi/elosvetleni_on.sh')
+else:
+ print "stop EL osvetleni mimo time zone"
+ #insertel("osvetleni")
+ os.system("/home/pi/elosvetleni_off.sh")
