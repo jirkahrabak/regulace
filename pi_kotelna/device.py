@@ -7,18 +7,18 @@ from time import sleep
 from datetime import datetime, time, date,timedelta
 axs=0
 bxs=0
-fitkoDB=0
+elDB=0
 tlast=20
 
 def insertel(zona):
    print "insertel zona"
    print zona
-   print fitkoDB
-   print fitko
-   if int(fitko)<>int(fitkoDB):
+   print elDB
+   print el
+   if int(fitko)<>int(elDB):
     conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO [dbo].[el_zony] ([datum],[power],[zona])VALUES(GETDATE ( ),'+str(fitko)+',\''+str(zona)+'\')  ;')
+    cursor.execute('INSERT INTO [dbo].[el_zony] ([datum],[power],[zona])VALUES(GETDATE ( ),'+str(el)+',\''+str(zona)+'\')  ;')
     conn.commit()
     cursor.close()
     print "insert"
@@ -107,17 +107,17 @@ try:
  data = cursor.fetchall()
  cursor.close()
  row=data[0]
- fitkoDB=int(row[1])
+ elDB=int(row[1])
  eltime=row[0]
  h=xtime.hour
  m=xtime.minute
  print "axs"
 except:
  print "chyba SQL fitkoDB"
- fitkoDB=1
+ elDB=1
 
 print "ELfitkoDB"
-print fitkoDB
+print elDB
 print eltime
 ##last device
 a="2"
@@ -175,7 +175,7 @@ if out2.find(high2) > -1:
  b="1" 
 
 fitko="0"
-if output1.find(high1) > -1 or output1.find(high2) > -1:
+if out2.find(high1) > -1 or out2.find(high2) > -1:
  fitko="1"
 
 print "x" 
@@ -268,19 +268,21 @@ try:
   #if (a.find("1") > -1 or b.find("1") > -1):
   if (fitko.find("1") > -1):
    #asos
+   el="1"
    insertel("fitko")
    print "start el fitko "
    os.system('/home/pi/elfitko_on.sh')
   else:
    if (eltime + timedelta(minutes=10)) < (datetime.utcnow()):
     print "stop EL fitko"
+    el=0
     insertel("fitko")
     os.system("/home/pi/elfitko_off.sh")
    else:
     print "no stop el 1 mimo cas"
  else:
   print "stop EL fitko mimo time zone"
-  fitko="0"
+  el=0
   insertel("fitko")
   os.system("/home/pi/elfitko_off.sh")
 except:
@@ -289,7 +291,25 @@ except:
  axs=1
  bxs=1
 
+ ##last el osvetleni
+elDB=0 
+try:
+ conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+ cursor = conn.cursor()
+ cursor.execute('SELECT TOP 1 * FROM [dbo].[el_zony] where zona like \'osvetleni\' order by datum desc ;')
+ data = cursor.fetchall()
+ cursor.close()
+ row=data[0]
+ elDB=int(row[1])
+ eltime=row[0]
+ h=xtime.hour
+ m=xtime.minute
+ print "el last osvetleni"
+except:
+ print "chyba SQL osvetleniDB"
+ elDB=1
 ##el osvetleni
+
 try:
  conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
  cursor = conn.cursor()
@@ -308,10 +328,12 @@ except:
 if osvetlenipower == 1:
  print "osvetlenipower= 1"
  #if (a.find("1") > -1 or b.find("1") > -1):
- #insertel("osvetleni")
+ el=1
+ insertel("osvetleni")
  print "start el osvetleni "
  os.system('/home/pi/elosvetleni_on.sh')
 else:
  print "stop EL osvetleni mimo time zone"
- #insertel("osvetleni")
+ el=0
+ insertel("osvetleni")
  os.system("/home/pi/elosvetleni_off.sh")
