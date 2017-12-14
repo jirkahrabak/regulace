@@ -130,7 +130,7 @@ if (!$conn) {
 //$stmt = sqlsrv_query( $conn, $sql );
 //$row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ; 
 
-$res = sqlsrv_query( $conn, "SELECT TOP (1) * FROM teploty order by datum desc ");
+$res = sqlsrv_query( $conn, " SELECT TOP (1) datum+(GETUTCDATE() - CONVERT(datetime, REPLACE(CONVERT(nvarchar(16), (CAST(GETUTCDATE() AT TIME ZONE 'Central European Standard Time' AS datetimeoffset)), 127), 'T', ' '), 120)) as datumTZ,* FROM teploty order by datum desc");
  $xx = sqlsrv_fetch_array($res, SQLSRV_FETCH_ASSOC);
 
  $res1 = sqlsrv_query( $conn, "SELECT TOP (1) * FROM teploty2 ORDER BY datum desc " );
@@ -166,7 +166,7 @@ $z1 = $xx['zona1'];
 $z2 = $xx['zona2'];
 $kot = 0;// "kotelcer");
 $sot = $xx['solarOT'];// "solarcer");
-$data = $xx['datum'];// "data");
+$data = $xx['datumTZ'];// "data");
 $time = " ";// "time");
 $zdroj2 = " ";// "zdroj2");
 $zdroj3 = " ";// "zdroj3");
