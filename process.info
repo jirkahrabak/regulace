@@ -1,0 +1,4 @@
+import subprocess
+proc = subprocess.Popen("ps -fA | grep python", shell = True, stdout=subprocess.PIPE)
+p = proc.communicate()
+p[0].find("test.py")
