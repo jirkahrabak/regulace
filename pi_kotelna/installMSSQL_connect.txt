@@ -1,0 +1,8 @@
+sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
+pip install pyodbc sqlalchemy
+
+nano /etc/odbcinst.ini
+[FreeTDS]
+Description=FreeTDS Driver
+Driver=/usr/lib/arm-linux-gnueabihf/odbc/libtdsodbc.so
+Setup=/usr/lib/arm-linux-gnueabihf/odbc/libtdsS.so

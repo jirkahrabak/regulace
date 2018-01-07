@@ -1,0 +1,36 @@
+#!/bin/sh
+gpio -g mode 19 out
+gpio -g write 19 0
+
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+#GPIO.setmode(GPIO.BOARD)
+GPIO.setup(19, GPIO.OUT)
+
+p = GPIO.PWM(19, 5000)
+p.start(100)
+p.ChangeDutyCycle(60)
+
+>>> GPIO.output(6,0)
+>>> GPIO.output(6,1)
+>>> p = GPIO.PWM(6, 0.5)
+>>> p.start(1)
+>>> p = GPIO.PWM(6, 1)
+>>> p.start(1)
+>>> p = GPIO.PWM(6, 0.5)
+>>> p.start(50)
+>>> p.start(5)
+>>> p.start(1)
+>>> p.start(100)
+>>> p.start(10)
+>>> p.start(1)
+>>> p.stop()
+>>> p = GPIO.PWM(6, 0.5)
+>>> p.start(1)
+>>> p.ChangeDutyCycle(50)
+>>> p.ChangeDutyCycle(90)
+
+
+input('Press return to stop:')   # use raw_input for Python 2
+p.stop()
+GPIO.cleanup()
