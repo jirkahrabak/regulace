@@ -400,3 +400,4 @@ print "set teploty"
 if (float(Z2a) <> float(tpoz)) and (float(Z2a) < 25):
  print "rozdil"
  setT()
+

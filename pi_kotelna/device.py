@@ -15,7 +15,7 @@ def insertel(zona):
    print zona
    print elDB
    print el
-   if int(fitko)<>int(elDB):
+   if int(el)<>int(elDB):
     conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
     cursor = conn.cursor()
     cursor.execute('INSERT INTO [dbo].[el_zony] ([datum],[power],[zona])VALUES(GETDATE ( ),'+str(el)+',\''+str(zona)+'\')  ;')
@@ -318,6 +318,7 @@ try:
  cursor.close()
  row=data[0]
  osvetlenipower=int(row[1])
+ 
  print "osvetlenipower"
  print osvetlenipower
 except:

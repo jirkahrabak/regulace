@@ -3,6 +3,7 @@ import os
 import time
 from datetime import datetime, time, date,timedelta
 
+deltatime=60
 zonaDB=0
 zonanow=0
 def insertel(zona):
@@ -58,7 +59,7 @@ except:
  axs="1"
  bxs="1"
 
-print xtime + timedelta(minutes=15)
+print xtime + timedelta(minutes=deltatime)
 print ">"
 print datetime.utcnow()
 #if (xtime + timedelta(minutes=30)) > (datetime.utcnow()):
@@ -74,7 +75,7 @@ if (axs.find("1") > -1 or bxs.find("1") > -1):
  insertel("podkrovi")
  #os.system('/home/pi/el2_on.sh')
 else:
- if (xtime + timedelta(minutes=60)) < (datetime.utcnow()):
+ if (xtime + timedelta(minutes=deltatime)) < (datetime.utcnow()):
   print "stop EL1"
   os.system("/home/pi/el_off.sh")
   zonanow=0
