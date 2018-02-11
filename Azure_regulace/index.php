@@ -157,6 +157,11 @@ $res = sqlsrv_query( $conn, " SELECT TOP (1) datum+(GETUTCDATE() - CONVERT(datet
  $elL2h=sqlsrv_fetch_array($elL2, SQLSRV_FETCH_ASSOC);
  $elL2h=$elL2h['L1W'];
   
+  
+ $wind=sqlsrv_query( $conn, "SELECT [speedms] FROM [dbo].[Lastwind]");
+ $windh=sqlsrv_fetch_array($wind, SQLSRV_FETCH_ASSOC);
+ $windh=$windh['speedms'];
+   
  //$elkotelnaL1h=0;
  //$elkotelnaL1h = round($elkotelnaL1h,2);
 
@@ -244,6 +249,8 @@ Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 326px; width: 150px;\">el podkrovi: $elpodkoriv</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 348px; width: 150px;\">el L1: $elL1h</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 370px; width: 150px;\">el L2: $elL2h</span>";
+Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 392px; width: 150px;\">wind: $windh</span>";
+
 
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 404px; width: 120px;\">Solar: $solar_aktual kW</span>";
 
