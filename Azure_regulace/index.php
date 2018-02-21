@@ -140,6 +140,9 @@ $res = sqlsrv_query( $conn, " SELECT TOP (1) datum+(GETUTCDATE() - CONVERT(datet
  $res3 = sqlsrv_query( $conn, "SELECT TOP 1 * FROM [dbo].[el_zony] where zona like 'podkrovi' order by datum desc " );
  $xxxxx = sqlsrv_fetch_array($res3, SQLSRV_FETCH_ASSOC);
  
+ $solarday = sqlsrv_query( $conn, "select * from solar_kw_curent_day" );
+ $solarday = sqlsrv_fetch_array($solarday, SQLSRV_FETCH_ASSOC);
+ $solarday=$solarday['solarkw'];
  //$rkwh= mysql_query("SELECT * FROM `KWH`",GetMyConnection() );
 // $xkwh = mysql_fetch_row($rkwh);
  $dkwh = 0; //$xkwh[0];
@@ -222,7 +225,7 @@ $solar_aktual = ((9/60*$sot/100)*$Rt*$Ct*($solar - $AKU1s))/1000000;
 $solar_aktual =  round($solar_aktual, 2);
 $kwh= round($kw36*($z2-$venku)/36,2);
 
-$dkwh=round($dkwh,2);
+$dkwh=round($solarday,2);
 $doba=0;
 $kw=0;
 if($AKU1s > $Z2top)
