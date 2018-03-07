@@ -145,7 +145,7 @@ $res = sqlsrv_query( $conn, " SELECT TOP (1) datum+(GETUTCDATE() - CONVERT(datet
  $solarday=$solarday['solarkw'];
  //$rkwh= mysql_query("SELECT * FROM `KWH`",GetMyConnection() );
 // $xkwh = mysql_fetch_row($rkwh);
- $dkwh = 0; //$xkwh[0];
+ //$dkwh = 0; //$xkwh[0];
 
 $dme280=sqlsrv_query( $conn, "SELECT TOP (1) [datum],[teplota],[tlak]/100 as tlak,[vlhkost] FROM [dbo].[bme280] order by datum desc");
  $dme280=sqlsrv_fetch_array($dme280, SQLSRV_FETCH_ASSOC);
