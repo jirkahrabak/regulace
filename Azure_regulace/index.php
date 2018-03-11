@@ -1,4 +1,4 @@
-﻿\<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 <meta http-equiv="refresh" content="60"> 
@@ -170,6 +170,9 @@ $dme280=sqlsrv_query( $conn, "SELECT TOP (1) [datum],[teplota],[tlak]/100 as tla
  $windh=sqlsrv_fetch_array($wind, SQLSRV_FETCH_ASSOC);
  $windh=$windh['speedms'];
      
+ $light=sqlsrv_query( $conn, "SELECT TOP (1) [datum],[svetlo],[device] FROM [dbo].[bh1750] order by datum desc");
+ $lighth=sqlsrv_fetch_array($light, SQLSRV_FETCH_ASSOC);
+ $lighth=$lighth['svetlo'];
  //$elkotelnaL1h=0;
  //$elkotelnaL1h = round($elkotelnaL1h,2);
 
@@ -248,7 +251,7 @@ $init = $doba*3600;
 $h = floor($init / 3600);
 $m = floor(($init / 60) % 60);
 
-
+Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 194px; width: 150px;\">svetlo:$lighth</svetlo:$lighth> lx</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 216px; width: 150px;\">barak aktual:$kwh kW</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 238px; width: 150px;\">doba aku: $h:$m</span>";
 Echo "<span id=\"ctl00_baseContent_lblSolarPower\" class=\"lblTechnol\" style=\"left: 5px; position: absolute; top: 260px; width: 150px;\">solar den: $dkwh kwh</span>";

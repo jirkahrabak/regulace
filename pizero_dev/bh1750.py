@@ -56,17 +56,22 @@ def readLight(addr=DEVICE):
   return convertToNumber(data)
 
 def main():
-
+  last=-1
   while True:
-    light=str(readLight())
+    light=readLight()
     devicename="device1"
     print "Light Level : " + str(light) + " lx"
-    conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
-    cursor = conn.cursor()
-    cursor.execute('INSERT INTO [dbo].[bh1750] ([datum],[svetlo],[device])VALUES(GETDATE ( ),'+str(light)+',\''+str(devicename)+'\') ;')
-    conn.commit()
-    cursor.close()
-    time.sleep(30)
+    print int(last)
+    print int(light)
+    if int(last) <> int(light):
+      print "rozdil"
+      conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=topeni.database.windows.net;PORT=1433;DATABASE=topeni;UID=web;PWD=Laky85@@;TDS_Version=8.0;')
+      cursor = conn.cursor()
+      cursor.execute('INSERT INTO [dbo].[bh1750] ([datum],[svetlo],[device])VALUES(GETDATE ( ),'+str(light)+',\''+str(devicename)+'\') ;')
+      conn.commit()
+      cursor.close()
+      last=int(light)
+    time.sleep(1)
   
 if __name__=="__main__":
    main()
