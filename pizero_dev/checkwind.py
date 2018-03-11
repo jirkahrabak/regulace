@@ -15,3 +15,9 @@ if ( p[0].find("/bmp280.py") > -1):
 else:
         print "not run"
         os.system('/root/bmp280.sh &')
+
+if ( p[0].find("/bh1750.py") > -1):
+        print "run"
+else:
+        print "not run"
+        os.system('/root/bh1750.sh &')
